@@ -2,7 +2,6 @@
 import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
 import { createTask } from '../../Redux/actions/taskActions'
 import notify from '../../notification/notify'
@@ -21,9 +20,12 @@ const NewTaskPage = () => {
       "code":date.code,
       "department":date.department,
       "subject":date.subject,
-      "company_name":date.company_name,
+      "info":date.info,
+      "notes":date.notes,
+      "status":date.status,
+      "sent":date.sent,
+      "completed":date.completed,
       "userId":date.userId,
-      "comment":date.comment,
       "registration_date":selectedDate
     }))
     notify('تم اضافة التاسك بنجاح','success')
@@ -37,14 +39,15 @@ const NewTaskPage = () => {
 
   let validationSchema = Yup.object({
     // registration_date: Yup.string().required('is Required'),
-    company_name: Yup.string().required('is Required'),
     code: Yup.string().required('is Required'),
     department: Yup.string().required('is Required'),
     subject: Yup.string().required('is Required'),
-    comment: Yup.string().required('is Required'),
-    // status: Yup.string().required('is Required'),
+    info: Yup.string().required('is Required'),
+    notes: Yup.string().required('is Required'),
+    status: Yup.string().required('is Required'),
     userId: Yup.string().required('is Required'),
-    // completed: Yup.string().required('is Required'),
+    sent: Yup.string().required('is Required'),
+    completed: Yup.string().required('is Required'),
   })
 
 
@@ -53,14 +56,15 @@ const NewTaskPage = () => {
   let Formik = useFormik({
     initialValues: {
       registration_date: "",
-      company_name: "",
       code: "",
       department: "",
       subject: "",
-      comment: "",
-      // status: "",
+      info: "",
+      notes: "",
+      status: "",
       userId: "",
-      // completed: "",
+      sent: "",
+      completed: "",
     },
     onSubmit: handleSubmit,
     validationSchema
@@ -89,7 +93,7 @@ const NewTaskPage = () => {
 
               <div className='container col-lg-8 mt-5'>
                 <div className="card p-3 border-radius-xl bg-white js-active"
-                     data-animation="FadeIn">
+                    data-animation="FadeIn">
 
                   <form onSubmit={Formik.handleSubmit}>
 
@@ -109,14 +113,14 @@ const NewTaskPage = () => {
                     </div>
 
 
-                    <div className='mb-3'>
+                    {/* <div className='mb-3'>
                       <label htmlFor='company_name' style={{float: 'right'}}>اسم الشركة</label>
                       <input onBlur={Formik.handleBlur} onChange={Formik.handleChange} className='form-control  '
                              style={{direction: 'rtl'}} name='company_name' type='text' id='company_name'></input>
                       {(Formik.errors.company_name && Formik.touched.company_name) ?
                           <div className='alert alert-danger'>{Formik.errors.company_name}</div>
                           : ""}
-                    </div>
+                    </div> */}
 
 
                     <div className='mb-3'>
@@ -148,23 +152,45 @@ const NewTaskPage = () => {
                           : ""}
                     </div>
 
-
                     <div className='mb-3'>
-                      <label htmlFor='comment' style={{float: 'right'}}>تعليق</label>
+                      <label htmlFor='info' style={{float: 'right'}}>البيانات</label>
                       <input onBlur={Formik.handleBlur} onChange={Formik.handleChange} className='form-control  '
-                             name='comment' type='text' id='comment'></input>
-
-                      {(Formik.errors.comment && Formik.touched.comment) ?
-                          <div className='alert alert-danger'>{Formik.errors.comment}</div>
+                             name='info' type='text' id='info'></input>
+                      {(Formik.errors.info && Formik.touched.info) ?
+                          <div className='alert alert-danger'>{Formik.errors.info}</div>
                           : ""}
                     </div>
 
-                    {/* <div className='mb-3'>
-            <label htmlFor='status'>الحالة</label>
-            <input onBlur={Formik.handleBlur} onChange={Formik.handleChange} className='form-control  ' name='status' type='text' id='status'></input>
-            {(Formik.errors.status  && Formik.touched.status)? <div className='alert alert-danger'>{Formik.errors.status}</div>
-           :""}
-          </div> */}
+                    <div className='mb-3'>
+                      <label htmlFor='notes' style={{float: 'right'}}>الملاحظات</label>
+                      <input onBlur={Formik.handleBlur} onChange={Formik.handleChange} className='form-control  '
+                             name='notes' type='text' id='notes'></input>
+                      {(Formik.errors.notes && Formik.touched.notes) ?
+                          <div className='alert alert-danger'>{Formik.errors.notes}</div>
+                          : ""}
+                    </div>
+
+                    <div className='mb-3'>
+                        <label htmlFor='status' style={{float: 'right'}}>الحالة</label>
+                        <select
+                          
+                          onBlur={Formik.handleBlur}
+                          onChange={Formik.handleChange}
+                          className='form-select rtl px-5'
+                          name='status'
+                          id='status'
+                          value={Formik.values.status}
+                        >
+                          <option value=''>اختر الحالة</option>
+                          <option value='pending'>انتظار</option>
+                          <option value='accepted'>مقبول</option>
+                          <option value='rejected'>مرفوض</option>
+                        </select>
+                        {(Formik.errors.status && Formik.touched.status) && (
+                          <div className='alert alert-danger'>{Formik.errors.status}</div>
+                        )}
+                      </div>
+
 
                     <div className='mb-3'>
                       <label htmlFor='userId' style={{float: 'right'}}>اسم المستخدم</label>
@@ -175,13 +201,89 @@ const NewTaskPage = () => {
                           : ""}
                     </div>
 
+                    <div className='mb-3'>
+                      <label htmlFor='sent' style={{float: 'right'}}>تم الإرسال ؟ </label>
+                      <br/>
+                      <div style={{display:'flex',width:'95%',justifyContent:'space-between'}}>
+                      <div>
+                        <input
+                          onBlur={Formik.handleBlur}
+                          onChange={Formik.handleChange}
+                          className='form-check-input'
+                          name='sent'
+                          type='radio'
+                          id='sent_true'
+                          style={{border: '1px solid gray'}}
+                          value='true'
+                          checked={Formik.values.sent === 'true'}
+                        />
+                        <label className='form-check-label' htmlFor='sent_true'>True</label>
+                      </div>
+                      <div>
+                        <input
+                          onBlur={Formik.handleBlur}
+                          onChange={Formik.handleChange}
+                          className='form-check-input'
+                          name='sent'
+                          type='radio'
+                          style={{border: '1px solid gray'}}
+                          id='sent_false'
+                          value='false'
+                          checked={Formik.values.sent === 'false'}
+                        />
+                        <label className='form-check-label' htmlFor='sent_false'>False</label>
+                      </div>
+                      </div>
+                      {Formik.errors.sent && Formik.touched.sent && (
+                        <div className='alert alert-danger'>{Formik.errors.sent}</div>
+                      )}
+                    </div>
 
-                    {/* <div className='mb-3'>
-            <label htmlFor='completed'>مكتمل ؟ </label>
-            <input onBlur={Formik.handleBlur} onChange={Formik.handleChange} className='form-control  ' name='completed' type='text' id='completed'></input>
-            {(Formik.errors.completed && Formik.touched.completed) ? <div className='alert alert-danger'>{Formik.errors.completed}</div>
-           :""}
-          </div> */}
+                    
+                    <div className='mb-3'>
+                      <label htmlFor='completed' style={{float: 'right'}}>مكتمل ؟ </label>
+                      <br/>
+                      <div style={{display:'flex',width:'95%',justifyContent:'space-between'}}>
+                      <div>
+                        <input
+                          onBlur={Formik.handleBlur}
+                          onChange={Formik.handleChange}
+                          className='form-check-input'
+                          name='completed'
+                          type='radio'
+                          id='completed_true'
+                          style={{border: '1px solid gray'}}
+                          value='true'
+                          checked={Formik.values.completed === 'true'}
+                        />
+                        <label className='form-check-label' htmlFor='completed_true'>True</label>
+                      </div>
+                      <div>
+                        <input
+                          onBlur={Formik.handleBlur}
+                          onChange={Formik.handleChange}
+                          className='form-check-input'
+                          name='completed'
+                          type='radio'
+                          style={{border: '1px solid gray'}}
+                          id='completed_false'
+                          value='false'
+                          checked={Formik.values.completed === 'false'}
+                        />
+                        <label className='form-check-label' htmlFor='completed_false'>False</label>
+                      </div>
+                      </div>
+                      {Formik.errors.completed && Formik.touched.completed && (
+                        <div className='alert alert-danger'>{Formik.errors.completed}</div>
+                      )}
+                    </div>
+
+
+
+                  
+
+
+                    
 
                     <button type='submit' className='btn btn-success mt-3' style={{float: 'right'}}>حفظ المعلومات
                     </button>

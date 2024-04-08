@@ -27,6 +27,7 @@ const HomePage = () => {
           }]
   });
     calendar.render()
+   
   }, [alltasks, dispatch])
   
 

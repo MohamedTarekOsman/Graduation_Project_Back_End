@@ -3,7 +3,7 @@ const mongoose=require('mongoose')
 
 const notificationSchema=new mongoose.Schema({
     user_id:{
-        type:Number,
+        type:String,
         required:[true,"user_id is required"],
         ref:"User"
     },

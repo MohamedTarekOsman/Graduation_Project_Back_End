@@ -2,15 +2,6 @@ const mongoose=require('mongoose')
 
 
 const tasksSchema=new mongoose.Schema({
-    registration_date:{
-        type:String,
-        maxlength:[255,"Too Long registration_date"],
-    },
-    company_name:{
-        type:String,
-        required:true,
-        maxlength:[255,"Too Long company_name"],
-    },
     code:{
         type:String,
         unique:[true,'code is unique'],
@@ -26,36 +17,31 @@ const tasksSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    comment:{
+    info:{
         type:String,
+        maxlength:[255,"Too Long info"],
     },
-    sent  :{
-        type:Boolean,
-        default:false,
+    notes:{
+        type:String,
     },
     status  :{
         type:String,
         enum:['pending','accepted','rejected'],
         default:'pending',
     },
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref:'User'
+    sent  :{
+        type:Boolean,
+        default:false,
     },
     completed  :{
         type:String,
         default:false,
     },
-    sub_status  :{
-        type:String,
-        enum:['waiting','pending','ready','finished'],
-        default:'pending',
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User',
     },
-    execTime:{
-        type:Number,
-        default:0
-    }
     //exec for each task - working hour - each employee have total execution time 
 },{
     timestamps:true,

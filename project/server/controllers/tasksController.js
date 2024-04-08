@@ -12,15 +12,16 @@ const User = require('../models/UserModel')
 //     hour12: true
 //   });
 const createTasks=asyncHandler(async(req, res)=>{
-        const tasks=await Tasks.create({
-            company_name:req.body.company_name,
-            department:req.body.department,
-            subject:req.body.subject,
-            userId:req.body.userId,
-            comment:req.body.comment,
-            code:req.body.code,
-            registration_date:req.body.registration_date
-        })
+//   {
+//     company_name:req.body.company_name,
+//     department:req.body.department,
+//     subject:req.body.subject,
+//     userId:req.body.userId,
+//     comment:req.body.comment,
+//     code:req.body.code,
+//     registration_date:req.body.registration_date
+// }
+        const tasks=await Tasks.create(req.body)
         const user=await User.findById(req.body.userId)
         if(!user){
             return res.status(404).json({error:"User not found"})
@@ -55,7 +56,6 @@ const updateTasks = asyncHandler(async (req, res) => {
         sent: req.body.sent,
         status: req.body.status,
         completed: req.body.completed,
-        sub_status: req.body.sub_status,
       },
       {
         new: true,

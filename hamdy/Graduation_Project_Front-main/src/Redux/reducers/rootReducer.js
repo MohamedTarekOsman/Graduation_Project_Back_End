@@ -5,6 +5,7 @@ import userReducer from './userReducer'
 import walletReducer from './walletReducer'
 import notificationReducer from './notificationReducer'
 import noteReducer from './noteReducer'
+import attendanceReducer from './attendanceReducer'
 
 export default combineReducers({
     authReducer:authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     walletReducer:walletReducer,
     notificationReducer:notificationReducer,
     noteReducer:noteReducer,
+    attendanceReducer:attendanceReducer
 })

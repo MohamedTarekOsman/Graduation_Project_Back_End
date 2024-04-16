@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideNavbar from '../../components/SideNavbar'
 import TopNavbar from '../../components/TopNavbar'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllAttendance } from '../../Redux/actions/attendanceAction'
 
 const Attendance = () => {
+  const dispatch=useDispatch()
+  const AllAttendances=useSelector(state=>state.attendanceReducer.attendances)
+  useEffect(()=>{
+    const getAllattendance=async()=>{
+      await dispatch(getAllAttendance())
+    }
+    getAllattendance()
+    
+  },[])
+
     return <> 
     <SideNavbar/>
     <main class="main-content position-relative border-radius-lg p-3 "> 
@@ -26,12 +38,11 @@ const Attendance = () => {
                     
                 </thead>
                 <tbody id="tableData">
-                <tr>
+          <tr>
                         <td className='bg-success'> <input class="form-control  " type="text" name=" first name" placeholder="بحث بلعمليات" required /></td>
                         <td className="bg-success">  <input class="form-control " type="text" name=" first name" placeholder="بحث بتاريخ الاضافه" required /></td>
                         <td className="bg-success"> <input class="form-control  " type="text" name=" first name" placeholder="بحث باسم المستخدم" required /></td>
                         <td className="bg-success">
-    
                         <input class="form-control  " type="text" name=" first name" placeholder="بحث بالدور" required />
         </td>
         <td className="bg-success"> <input class="form-control   " type="text" name=" first name" placeholder="بحث بالاسم " required /></td>
@@ -40,7 +51,8 @@ const Attendance = () => {
     
     
         </tr>
-                    <tr>
+        
+        <tr>
                         <td> <button type="button" class="btn btn-primary">اذهب ل اعدادات الادمن</button></td>
                         <td className="">None</td>
                         <td className="">admin</td>
@@ -54,39 +66,29 @@ const Attendance = () => {
     
         </tr>
     
-        <tr>
-                        <td> <button type="button" class="btn btn-primary">تغير كلمة السر</button>
-                        <button type="button" class="btn btn-danger mx-2">حذف</button>
-                        <button type="button" class="btn btn-success">تعديل</button>
-                        </td>
-                        <td className="">03/01/2024</td>
-                        <td className="">admin</td>
-                        <td className="">admin</td>
-                        
-        <td className="">shams</td>
-        
-        
-     
-    
-    
-        </tr>
-    
-        <tr>
+    {
+      AllAttendances.data?(
+        AllAttendances.data.map((item,index)=><tr>
         <td> <button type="button" class="btn btn-primary">تغير كلمة السر</button>
-                        <button type="button" class="btn btn-danger mx-2">حذف</button>
-                        <button type="button" class="btn btn-success">تعديل</button>
-                        </td>
-                        <td className="">03/01/2024</td>
-                        <td className="">admin</td>
-                        <td className="">admin</td>
-                        
-        <td className="">mostafa</td>
+        <button type="button" class="btn btn-danger mx-2">حذف</button>
+        <button type="button" class="btn btn-success">تعديل</button>
+        </td>
+        <td className="">{new Date(item.updatedAt).getDate()}/{new Date(item.updatedAt).getMonth() + 1}/{new Date(item.updatedAt).getFullYear()}</td>
+        <td className="">{item.userId.username}</td>
+        <td className="">{item.userId.role}</td>
         
-      
-     
+<td className="">{item.firstName} {item.lastName}</td>
+
+
+
+
+
+</tr>)
+      ):''
+    }
+        
     
-    
-        </tr>
+        
     
     
     

@@ -9,7 +9,7 @@ import AllUsers from "./pages/allUsers/AllUsers";
 import Wallet from "./pages/Wallet/Wallet";
 import NotificationPage from "./pages/home/NotificationPage";
 import NotesPage from "./pages/home/NotesPage";
-
+import Attendance from "./pages/Attendance/Attendance";
 function App() {
   return (
     <>
@@ -23,6 +23,7 @@ function App() {
       <Route path="/wallet" element={ <Wallet/>} />
       <Route path="/notifications" element={ <NotificationPage/>} />
       <Route path="/notes" element={ <NotesPage/>} />
+      <Route path="/attendance" element={ <Attendance/>} />
     </Routes>
     </>
   );

@@ -1,0 +1,33 @@
+const userRoute=require('./userRoute')
+const authRoute=require('./authRoute')
+const agendaRoute=require('./agendaRoute')
+const attachment=require('./attachmentRoute')
+const employeeLastJob=require('./employeeLastJobRoute')
+const employeeLog=require('./employeeLogRoute')
+const files=require('./filesRoute')
+const message=require('./messageRoute')
+const note=require('./noteRoute')
+const notification=require('./notificationRoute')
+const publicnNotes=require('./publicNotesRoute')
+const tasks=require('./tasksRoute')
+const wallet=require('./walletRoute')
+const attendance=require('./attendanceRoute')
+
+const mountRoutes=(app)=>{
+    app.use("/api/v1/users",userRoute)
+    app.use("/api/v1/auth",authRoute)
+    app.use("/api/v1/agenda",agendaRoute)
+    app.use("/api/v1/attachment",attachment)
+    app.use("/api/v1/employeeLastJob",employeeLastJob)
+    app.use("/api/v1/employeeLog",employeeLog)
+    app.use("/api/v1/files",files)
+    app.use("/api/v1/message",message)
+    app.use("/api/v1/note",note)
+    app.use("/api/v1/notification",notification)
+    app.use("/api/v1/publicnNotes",publicnNotes)
+    app.use("/api/v1/tasks",tasks)
+    app.use("/api/v1/wallet",wallet)
+    app.use("/api/v1/attendance",attendance)
+}
+
+module.exports =mountRoutes

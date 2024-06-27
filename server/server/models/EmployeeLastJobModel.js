@@ -4,8 +4,6 @@ const mongoose=require('mongoose')
 const employeeLastJobSchema=new mongoose.Schema({
     code:{
         type:String,
-        unique:[true,'code is unique'],
-        uniqueCaseInsensitive: false,
         required:true,
     },
     department:{
@@ -41,10 +39,9 @@ const employeeLastJobSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
     },
-    registration_date:{
+    report:{
         type:String,
         required:true,
-        default:"0",
     }
 },{
     timestamps:true,

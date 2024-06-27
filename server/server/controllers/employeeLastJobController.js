@@ -24,7 +24,7 @@ const updateEmployeeLastJob=asyncHandler(async(req, res)=>{
 })
 
 const deleteEmployeeLastJob=asyncHandler(async(req, res)=>{
-    const employeeLastJob=await EmployeeLastJob.findByIdAndDelete(req.params.id)
+    const employeeLastJob=await EmployeeLastJob.findOneAndDelete({code:req.params.code})
     res.status(200).json({message: "EmployeeLastJob deleted successfully"})
 })
 

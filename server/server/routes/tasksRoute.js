@@ -12,7 +12,7 @@ router.route('/')
     )
 .get(
     authController.protect,
-    authController.allowedTo('admin','manager'),
+    authController.allowedTo('admin','manager','employee'),
     getAllTaskss
     )
 

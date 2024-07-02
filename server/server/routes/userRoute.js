@@ -13,7 +13,7 @@ router.route('/')
     createUserValidator,createUser)
 
 .get(authController.protect,
-    authController.allowedTo('admin','manager'),getAllUsers)
+    authController.allowedTo('admin','manager','employee'),getAllUsers)
 
 router.route('/:id')
 .get( authController.protect,

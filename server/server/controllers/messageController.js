@@ -28,10 +28,26 @@ const deleteMessage=asyncHandler(async(req, res)=>{
     res.status(200).json({message: "Message deleted successfully"})
 })
 
+const deleteMessagesBetweenUsers = asyncHandler(async (req, res) => {
+    try {
+      const { sender, receiver } = req.body;
+      const result = await Message.deleteMany({
+        $or: [
+          { sender: sender, receiver: receiver },
+          { sender: receiver, receiver: sender }
+        ]
+      });
+      res.status(200).json({ message: "Messages deleted successfully", deletedCount: result.deletedCount });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete messages", error });
+    }
+  })
+
 module.exports ={
     createMessage,
     getAllMessages,
     getMessage,
     updateMessage,
-    deleteMessage
+    deleteMessage,
+    deleteMessagesBetweenUsers
 }

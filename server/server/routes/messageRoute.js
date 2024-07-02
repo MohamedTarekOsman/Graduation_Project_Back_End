@@ -1,9 +1,10 @@
 const express = require('express');
-const { createMessage, getAllMessages, getMessage, updateMessage, deleteMessage } = require('../controllers/messageController');
+const { createMessage, getAllMessages, getMessage, updateMessage, deleteMessage, deleteMessagesBetweenUsers } = require('../controllers/messageController');
+const authController=require('../controllers/authController')
 const router = express.Router();
 
 router.route('/')
-.post(createMessage)
+.post(authController.protect,createMessage)
 .get(getAllMessages)
 
 router.route('/:id')
@@ -11,5 +12,7 @@ router.route('/:id')
 .put(updateMessage)
 .delete(deleteMessage)
 
+router.route('/deleteMessagesBetweenUsers')
+.post(authController.protect,deleteMessagesBetweenUsers)
 
 module.exports = router;
